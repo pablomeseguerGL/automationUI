@@ -4,3 +4,5 @@ bin
 build
 out
 reports
+.gradle
+.idea/workspace.xml
