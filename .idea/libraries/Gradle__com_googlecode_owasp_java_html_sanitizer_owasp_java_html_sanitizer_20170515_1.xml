@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20170515.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.owasp-java-html-sanitizer/owasp-java-html-sanitizer/20170515.1/2ac64ee731e71b8ce411b7ff306c35eae672f6dd/owasp-java-html-sanitizer-20170515.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.owasp-java-html-sanitizer/owasp-java-html-sanitizer/20170515.1/bea6bf11a27c5738329e2d870cad6d6d6ddd7ad6/owasp-java-html-sanitizer-20170515.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
