@@ -1,6 +1,4 @@
-group 'gloo_ui_automation'
-version '1.0-SNAPSHOT'
-
+import io.franzbecker.gradle.lombok.task.DelombokTask
 
 plugins {
     id "java"
@@ -8,27 +6,46 @@ plugins {
     id "idea"
     id "maven"
     id "groovy"
+    id 'io.franzbecker.gradle-lombok' version '1.11'
 }
-
-
-
-
 
 repositories {
     mavenCentral()
 }
 
+
+group 'gloo_ui_automation'
+version '1.0-SNAPSHOT'
+
 //Packages for class (set and get)
 lombok {
-    version = "1.16.21"
-    sha256 = ""
+    version = "1.16.4"
+    sha256 = "3ca225ce3917eac8bf4b7d2186845df4e70dcdede356dca8537b6d78a535c91e"
 }
 sourceCompatibility = 1.8
+
+//Tasks
+
+task delombok(type: DelombokTask, dependsOn: compileJava) {
+    ext.outputDir = file("$buildDir/delombok")
+    outputs.dir(outputDir)
+    sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+        args(it, "-d", outputDir)
+    }
+}
+
+task delombokHelp(type: DelombokTask) {
+    args "--help"
+}
+
+
 //Dependies for packages
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.2.5'
+
     compile group: 'info.cukes', name: 'cucumber-java', version: '1.2.5'
     compile group: 'net.masterthought', name: 'cucumber-reporting', version: '3.14.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
