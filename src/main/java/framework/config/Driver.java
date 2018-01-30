@@ -2,52 +2,17 @@ package framework.config;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import cucumber.api.java.it.Ma;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import io.appium.java_client.remote.IOSMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.remote.CapabilityType;
 import io.appium.java_client.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.html5.Location;
-import org.openqa.selenium.html5.LocationContext;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.WrapsDriver;
-import org.openqa.selenium.remote.Response;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-
-
-
 
 
 /**
@@ -60,12 +25,20 @@ public class Driver  {
     public static AppiumDriver<WebElement> driver;
 
     public static  ArrayList<DesiredCapabilities> listCapabilities=new ArrayList<>();
-
+    String capabilities;
 
 
     public Driver(String capabilities) {
-        AppiumDriverLocalService service = AppiumDriverLocalService.buildDefaultService();
-        service.start();
+        AppiumServerJava appiumServer = new AppiumServerJava();
+
+        int port = 4723;
+        if(!appiumServer.checkIfServerIsRunnning(port)) {
+            appiumServer.startServer(port);
+         //   appiumServer.stopServer();
+        } else {
+            System.out.println("Appium Server already running on Port - " + port);
+        }
+        this.capabilities=capabilities;
         listCapabilities=generateCapabilities(capabilities);
 
     }
@@ -87,6 +60,7 @@ public class Driver  {
                     }
 
                 }
+
                 if(execution && !capabilityObject[1].toString().contains("yes")){
 
                     capabilitiesObjet.setCapability(capabilityObject[0].toString(),capabilityObject[1].toString().toString().replace("\"",""));
@@ -121,18 +95,50 @@ public  ArrayList<DesiredCapabilities> searchCapability(String property, String 
     public  AndroidDriver androidDriverRun() throws Exception {
         {
 
-
   if(searchCapability("platformName","Android").size()>=1) {
-    DesiredCapabilities desiredCapabilities = searchCapability("deviceName", "gloo").get(0);
+    DesiredCapabilities desiredCapabilities = searchCapability("platformName", "Android").get(0);
+
+
+
+
+
     final String URL_STRING = "";
     String urltemp = desiredCapabilities.getCapability("url").toString();
+
     driver = new AndroidDriver<WebElement>(new URL(urltemp), desiredCapabilities);
+
 }
         }
 
    return (AndroidDriver) driver;
 
         }
+
+
+public Map<Boolean,DesiredCapabilities> remoteExecution(DesiredCapabilities desiredCapabilities ) {
+
+    boolean remoteExecution = false;
+    DesiredCapabilities desiredCapabilitiesTemp = null;
+    Map<Boolean,DesiredCapabilities> values=null;
+    String[] capabilities = desiredCapabilities.toString().split(",");
+    for (String capability : capabilities) {
+        if (capability.toString().contains("remote")) {
+            if (capability.toString().contains("yes")) {
+                remoteExecution = true;
+            }
+
+        } else
+            desiredCapabilitiesTemp.setCapability(capability.split(":")[0].toString(), capability.split(":")[1].toString());
+    }
+    values.keySet().add(remoteExecution);
+    values.values().add(desiredCapabilitiesTemp);
+
+return values;
+}
+
+
+
+
 
     }
 
