@@ -28,12 +28,12 @@ public class DriverWeb {
         } else {
             switch (browser.toLowerCase()) {
                 case "firefox":
-                    System.setProperty("webdriver.gecko.driver", "./Resources/geckodriver");
+                    System.setProperty("webdriver.gecko.appiumDriver", "./Resources/geckodriver");
                     myDriver = new FirefoxDriver();
                     break;
 
                 case "chrome":
-                    System.setProperty("webdriver.chrome.driver", "./Resources/chromedriver");
+                    System.setProperty("webdriver.chrome.appiumDriver", "./Resources/chromedriver");
                     myDriver = new ChromeDriver();
                     break;
 
@@ -45,7 +45,7 @@ public class DriverWeb {
                     if (OS.toLowerCase().equals("mac")) {
                         throw new RuntimeException("Internet Explorer not supported on MAC platform");
                     }
-                    System.setProperty("webdriver.ie.driver", "./Resources/MicrosoftWebDriver.exe");
+                    System.setProperty("webdriver.ie.appiumDriver", "./Resources/MicrosoftWebDriver.exe");
                     myDriver = new InternetExplorerDriver();
                     break;
 
