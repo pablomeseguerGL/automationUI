@@ -39,8 +39,6 @@ public class MobileCapabilities {
 
                 String[] capabilityObject=   jsonElement.getAsJsonObject().entrySet().toArray()[i].toString().split("=");
 
-
-
                 capabilitiesObjet.setCapability(capabilityObject[0].toString(),capabilityObject[1].toString().toString().replace("\"",""));
 
                 if(capabilityObject[0].toString().contains("run")){
@@ -79,8 +77,6 @@ public class MobileCapabilities {
         }
         return null;
     }
-
-
 
 
 
