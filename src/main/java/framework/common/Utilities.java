@@ -1,10 +1,8 @@
 package framework.common;
 
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.Properties;
 
 /**
  * Created by pablomeseguer on 1/29/18.
@@ -65,5 +63,28 @@ public class Utilities {
         br.close();
 
         return finalRead;
+    }
+    public String getProperty(String fileName, String property) {
+        Properties prop = new Properties();
+        InputStream input = null;
+        String value="";
+        try {
+
+            input = new FileInputStream(fileName);
+            prop.load(input);
+            value=prop.getProperty(property);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return value;
     }
 }

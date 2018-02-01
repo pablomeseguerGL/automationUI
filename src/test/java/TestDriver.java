@@ -11,6 +11,6 @@ public class TestDriver {
         WebDriver myDriver = DriverWeb.getWebDriver();
         myDriver.get("https://www.google.com");
         myDriver.manage().window().maximize();
-        myDriver.close();
+        myDriver.quit();
     }
 }
