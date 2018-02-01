@@ -1,6 +1,10 @@
 package framework.common;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -9,7 +13,7 @@ import java.util.Properties;
  */
 public class Utilities {
 
-    public String getCapabilities(String name) throws IOException {
+    public String getCapabilities(String name) throws Exception {
         String initialRead = "";
         String finalRead = "";
         String strLine;
@@ -62,8 +66,30 @@ public class Utilities {
         //Close the input stream
         br.close();
 
+        dataValidator(finalRead);
+
         return finalRead;
     }
+
+    private void dataValidator(String text) throws Exception {
+        try {
+            JSONObject mainJsonObject = new JSONObject(text);
+            JSONArray dataArray = mainJsonObject.getJSONArray("capabilities");
+            for (int i = 0; i < dataArray.length(); i++) {
+                JSONObject jsonObject = dataArray.getJSONObject(i);
+                if(!jsonObject.get("platformName").toString().isEmpty() && !jsonObject.get("platformVersion").toString().isEmpty()
+                        && !jsonObject.get("deviceName").toString().isEmpty() && !jsonObject.get("automationName").toString().isEmpty()
+                        && !jsonObject.get("app").toString().isEmpty()){
+                    }else{
+                    throw new Exception("Mandatory capabilities are empty");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public String getProperty(String fileName, String property) {
         Properties prop = new Properties();
         InputStream input = null;

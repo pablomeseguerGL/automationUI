@@ -1,5 +1,6 @@
 package framework;
 
+import framework.common.Utilities;
 import framework.ui.windows.Login;
 
 
@@ -12,10 +13,13 @@ public class test {
 
 
 
-        public static void main(String[] args) throws IOException {
+        public static void main(String[] args) throws Exception {
 
-          Login login=new Login();
-                  login.AbstractScreen();
+            Utilities u = new Utilities();
+            u.getCapabilities("config.properties");
+
+          //Login login=new Login();
+            //      login.AbstractScreen();
 
         }
 
