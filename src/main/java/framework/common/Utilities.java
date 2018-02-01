@@ -1,6 +1,7 @@
 package framework.common;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,13 +66,20 @@ public class Utilities {
 
         //Close the input stream
         br.close();
+        Boolean validation = false;
+        validation = dataValidator(finalRead);
 
-        dataValidator(finalRead);
+        if(validation == true){
+        }else{
+        throw new Exception("Required capabilities are missing");
+        }
 
         return finalRead;
     }
 
-    private void dataValidator(String text) throws Exception {
+    private boolean dataValidator(String text) {
+        Boolean bool = false;
+
         try {
             JSONObject mainJsonObject = new JSONObject(text);
             JSONArray dataArray = mainJsonObject.getJSONArray("capabilities");
@@ -80,13 +88,19 @@ public class Utilities {
                 if(!jsonObject.get("platformName").toString().isEmpty() && !jsonObject.get("platformVersion").toString().isEmpty()
                         && !jsonObject.get("deviceName").toString().isEmpty() && !jsonObject.get("automationName").toString().isEmpty()
                         && !jsonObject.get("app").toString().isEmpty()){
+                    bool = true;
                     }else{
-                    throw new Exception("Mandatory capabilities are empty");
+                    bool = false;
+                    break;
                 }
             }
+
+            return bool;
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 

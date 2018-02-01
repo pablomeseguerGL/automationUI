@@ -23,6 +23,8 @@ public class MobileCapabilities {
             capabilitiesList = utilities.getCapabilities("config.properties");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         listCapabilities=generateCapabilities(capabilitiesList);
     }

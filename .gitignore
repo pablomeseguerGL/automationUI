@@ -6,3 +6,4 @@ out
 reports
 .gradle
 .idea/workspace.xml
+.idea/modules/gloo_ui_automation.iml
