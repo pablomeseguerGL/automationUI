@@ -6,6 +6,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import framework.config.DriverWeb;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 public class MyStepdefs {
@@ -14,6 +15,8 @@ public class MyStepdefs {
 
     @Before("@simple")
     public void launchSelenium() throws Throwable {
+        driver = DriverWeb.getWebDriver();
+
     }
 
 
@@ -24,15 +27,13 @@ public class MyStepdefs {
 
     @When("^I go to X page$")
     public void iGoToXPage() throws Throwable {
-        driver = DriverWeb.getWebDriver();
         driver.get("https://www.google.com/");
-        Thread.sleep(5000);
-        throw new PendingException();
+        Thread.sleep(2000);
     }
 
     @Then("^I see that element$")
     public void i_see_that_element() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Assert.assertEquals("Google", driver.getTitle());
+
     }
 }
