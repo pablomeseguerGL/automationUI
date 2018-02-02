@@ -15,11 +15,11 @@ public class test {
 
         public static void main(String[] args) throws Exception {
 
-            Utilities u = new Utilities();
-            u.getCapabilities("config.properties");
 
-          //Login login=new Login();
-            //      login.AbstractScreen();
+
+          Login login=new Login();
+          login.main();
+                  //login.AbstractScreen();
 
         }
 

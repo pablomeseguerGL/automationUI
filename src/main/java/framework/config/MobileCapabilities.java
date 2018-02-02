@@ -9,6 +9,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static framework.config.DriverMobile.getJsonProperties;
 
 /**
  * Created by pablomeseguer on 1/30/18.
@@ -17,6 +20,14 @@ public class MobileCapabilities {
     public static ArrayList<Capabilities> listCapabilities=new ArrayList<>();
 
     public MobileCapabilities() {
+
+
+    }
+
+
+
+    private static String getCapabiltiiesJson(){
+
         String capabilitiesList = null;
         Utilities utilities = new Utilities();
         try {
@@ -26,10 +37,10 @@ public class MobileCapabilities {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        listCapabilities=generateCapabilities(capabilitiesList);
+        return  capabilitiesList;
     }
 
-    public  ArrayList<Capabilities> generateCapabilities(String capabilities){
+    private  ArrayList<Capabilities> generateCapabilities(String capabilities){
 
         JsonParser jsonObject = new JsonParser();
         JsonObject jsonObjet = jsonObject.parse(capabilities).getAsJsonObject();
@@ -69,42 +80,37 @@ public class MobileCapabilities {
         return listCapabilities;
     }
 
-    public Capabilities searchCapability( ArrayList<Capabilities>  capabilities,String property, String value) {
-
-        for (Capabilities capability : capabilities) {
+    public   static ArrayList<DesiredCapabilities> searchCapability(List<DesiredCapabilities> capabilities, String property, String value) {
+        ArrayList<DesiredCapabilities> capabilitiesArrayList = null;
+        for (DesiredCapabilities capability :capabilities) {
             if (capability.getCapability(property).toString().contains(value)) {
-                return capability;
+                capabilitiesArrayList.add(capability);
             }
 
         }
-        return null;
+        return capabilitiesArrayList;
     }
 
 
 
-    public static ArrayList<Capabilities> CapabilitiesAndroid(){
-        ArrayList<Capabilities> capabilities=new ArrayList<>();
-        for(Capabilities capability :listCapabilities){
-            if(capability.getCapability("platformName").toString().contains("Android")){
-                capabilities.add(capability);
+    public static List<String>  getJsonProperties() {
+        JsonParser jsonObject = new JsonParser();
+        JsonObject jsonObjet = jsonObject.parse(getCapabiltiiesJson()).getAsJsonObject();
+        JsonObject jsonObjetAsJsonObject = jsonObjet.getAsJsonObject();
+        List<String> capabilities=null;
+
+        for (JsonElement jsonElement : jsonObjetAsJsonObject.get("capabilities").getAsJsonArray()) {
+
+            for (int i = 0; i <= jsonElement.getAsJsonObject().entrySet().toArray().length - 1; i++) {
+                String[] capabilityObject=   jsonElement.getAsJsonObject().entrySet().toArray()[i].toString().split("=");
+
+                capabilities.add(capabilityObject[0].toString()+"~"+capabilityObject[1].toString().toString().replace("\"",""));
             }
 
-        }
-        return capabilities;
-
-    }
-
-    public static ArrayList<Capabilities> CapabilitiesiOS(){
-        ArrayList<Capabilities> capabilities=new ArrayList<>();
-        for(Capabilities capability :listCapabilities){
-            if(capability.getCapability("platformName").toString().contains("iOS")){
-                capabilities.add(capability);
-            }
 
         }
         return capabilities;
 
     }
-
 
 }
