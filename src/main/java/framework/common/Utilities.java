@@ -1,7 +1,6 @@
 package framework.common;
 
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +68,8 @@ public class Utilities {
         Boolean validation = false;
         validation = dataValidator(finalRead);
 
+        System.out.println(finalRead);
+
         if(validation == true){
         }else{
         throw new Exception("Required capabilities are missing");
@@ -102,7 +103,6 @@ public class Utilities {
         }
         return false;
     }
-
 
     public String getProperty(String fileName, String property) {
         Properties prop = new Properties();

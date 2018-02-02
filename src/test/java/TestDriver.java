@@ -8,6 +8,7 @@ public class TestDriver extends TestBase{
                          String version, String browser, String deviceName, String deviceOrientation) {
         super(os, version, browser, deviceName, deviceOrientation);
     }
+
     @Test
     public void getWebDriver(){
 
