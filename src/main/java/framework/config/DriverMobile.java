@@ -11,6 +11,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.*;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -26,16 +27,16 @@ public class DriverMobile extends MobileCapabilities  {
 
     public  static AppiumDriver appiumDriver;
     Capabilities capabilities;
-    public  static  String platform;
+
     public DriverMobile() {
 
 
 
         this.capabilities=capabilities;
-        this.platform=platform;
+
         AppiumServerJava appiumServer = new AppiumServerJava();
 
-        int port = 4723;
+        int port = 5000;
         if(!appiumServer.checkIfServerIsRunnning(port)) {
             appiumServer.startServer(port);
         } else {
@@ -46,7 +47,22 @@ public class DriverMobile extends MobileCapabilities  {
 
     }
 
-    public static AppiumDriver<?> returnDriver(DesiredCapabilities capabilitiesObjet) {
+    public static DesiredCapabilities ignoreCapabilities(DesiredCapabilities capability,String deleteCapability) {
+        DesiredCapabilities capabilityValue=new DesiredCapabilities();
+        for (String capabilityTemp : capability.toString().replace("Capabilities {","").replace("}","")
+                .split(",")) {
+         String[]  capabilityTempSecondLevel=  capabilityTemp.split(":");
+            if(!capabilityTempSecondLevel[0].contains(deleteCapability)){
+                capabilityValue.setCapability(capabilityTempSecondLevel[0],capabilityTempSecondLevel[1]);
+            }
+
+        }
+        return capabilityValue;
+    }
+
+    public static AppiumDriver<?> returnDriver(String platformName,DesiredCapabilities capabilitiesObjet) {
+
+
         final String URL_STRING = "";
         String typeExecution="";
         AppiumDriver<?> appiumDriver = null;
@@ -59,12 +75,16 @@ public class DriverMobile extends MobileCapabilities  {
 
 
 
-        switch (platform.toLowerCase()) {
+        switch (platformName.toLowerCase()) {
 
             case "android":
                 try {
 
+
                     url=  capabilitiesObjet.getCapability("url").toString();
+                    capabilitiesObjet= ignoreCapabilities(capabilitiesObjet,"url");
+                    capabilitiesObjet= ignoreCapabilities(capabilitiesObjet,"app");
+                    capabilitiesObjet.setCapability("app","/Users/pablomeseguer/Desktop/Demogloo/PatientEngagement-Apperian.apk");
                     if(isRemote) {
 
 
@@ -73,7 +93,7 @@ public class DriverMobile extends MobileCapabilities  {
                     }
                     else
                     {
-                        appiumDriver = new AndroidDriver<>(new URL(url), capabilitiesObjet);
+                        appiumDriver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesObjet);
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -83,8 +103,9 @@ public class DriverMobile extends MobileCapabilities  {
                 try {
 
                     url=  capabilitiesObjet.getCapability("url").toString();
+                    capabilitiesObjet= ignoreCapabilities(capabilitiesObjet,"url");
                     if(isRemote) {
-                        appiumDriver = (AppiumDriver<WebElement>) new RemoteWebDriver(new URL(url), capabilitiesObjet);
+                        appiumDriver = (AppiumDriver<WebElement>) new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesObjet);
                     }
                     else
                     {
@@ -105,22 +126,7 @@ public class DriverMobile extends MobileCapabilities  {
 
 
 
-    public static ArrayList<DesiredCapabilities> getCapabilities(String platformName) {
-        boolean isRemote=false;
-        List<DesiredCapabilities> capabilities=null;
-        DesiredCapabilities capabilitiesObjet=null;
-        for(String capability :getJsonProperties()){
-            if(capability.equals("isRemote=\"false\"")){
-                isRemote=true;
-            }
-            if(!isRemote) {
-                String[] capabilityValues = capability.split("~");
-                capabilitiesObjet.setCapability(capabilityValues[0].toString(), capabilityValues[1].toString().toString().replace("\"", ""));
-            }
-            capabilities.add(capabilitiesObjet);
-        }
-        return  searchCapability(capabilities,"platformName",platformName);
-    }
+
 
 
 

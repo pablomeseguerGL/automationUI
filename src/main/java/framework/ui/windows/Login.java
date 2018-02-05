@@ -1,6 +1,8 @@
 package framework.ui.windows;
 
 import framework.config.DriverMobile;
+import framework.config.MobileCapabilities;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -9,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import io.appium.java_client.pagefactory.AndroidFindBy;
         import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,12 +22,14 @@ public class Login  extends DriverMobile  implements Runnable  {
 
 
     DesiredCapabilities capabilities;
+    ArrayList<DesiredCapabilities> listCapability=new ArrayList<>();
 
-    public Login(DesiredCapabilities capabilities) {
-        this.capabilities=capabilities;
-    }
+            String platformName;
+    public Login(String platformName) {
+        super();
+        this.platformName=platformName;
+         listCapability= getCapabilities(platformName);
 
-    public Login() {
     }
 
     @AndroidFindBy(id="username_edit_text")
@@ -40,10 +45,10 @@ public class Login  extends DriverMobile  implements Runnable  {
 
 
     public void AbstractScreen() {
+      DesiredCapabilities cap=  listCapability.get(0);
+      AppiumDriver<?> d=  DriverMobile.returnDriver(platformName,cap );
 
-
-
-        PageFactory.initElements( new AppiumFieldDecorator(DriverMobile.returnDriver(capabilities)),this);
+        PageFactory.initElements( new AppiumFieldDecorator(DriverMobile.returnDriver(platformName, listCapabilities.get(0))),this);
         userNameTextBox.sendKeys("hola");
         passWordTextBox.sendKeys("pop");
         loginButon.click();
@@ -52,6 +57,8 @@ public class Login  extends DriverMobile  implements Runnable  {
     }
 
     public static void main() {
+
+
         /*
         Runnabler1 = new Login(capabilities);
         List<Runnable> runnables;
@@ -64,7 +71,7 @@ public class Login  extends DriverMobile  implements Runnable  {
         for(){
 
         new Thread(r1).start();
-*/
+
 
    List<Runnable> runnings;
         LinkedList browsers = new LinkedList();
@@ -75,7 +82,7 @@ for (DesiredCapabilities capa:getCapabilities("Android")){
 for (Object n:browsers){
     new Thread((Runnable) n).start();
 }
-
+*/
     }
 
     @Override

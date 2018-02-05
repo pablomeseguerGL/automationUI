@@ -17,8 +17,8 @@ public class test {
 
 
 
-          Login login=new Login();
-          login.main();
+          Login login=new Login("Android");
+          login.AbstractScreen();
                   //login.AbstractScreen();
 
         }
