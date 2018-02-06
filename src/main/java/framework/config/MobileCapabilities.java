@@ -31,7 +31,7 @@ public class MobileCapabilities {
         String capabilitiesList = null;
         Utilities utilities = new Utilities();
         try {
-            capabilitiesList = utilities.getCapabilities("config.properties");
+            capabilitiesList = utilities.getCapabilities("config.properties",true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

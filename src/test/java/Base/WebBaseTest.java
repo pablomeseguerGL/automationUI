@@ -1,7 +1,11 @@
+package Base;
 
 import com.saucelabs.common.SauceOnDemandAuthentication;
 
 import framework.common.Utilities;
+import framework.config.DriverWeb;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.*;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
@@ -28,19 +32,21 @@ import javax.rmi.CORBA.Util;
  */
 @Ignore
 @RunWith(ConcurrentParameterized.class)
-public class TestBase implements SauceOnDemandSessionIdProvider {
+public class WebBaseTest implements SauceOnDemandSessionIdProvider {
 
     public static Utilities util = new Utilities();
-    public static String username = util.getProperty("WebDriverConfig.prperties","username");
-
-    public static java.lang.String accesskey = util.getProperty("WebDriverConfig.properties","key");
-    public static String port= util.getProperty("WebDriverConfig.properties","port");
+    public static boolean isRemote;
+    public static String username;
+    public static String password;
+    public static String accessKey;
+    public static String port;
+    public static String localBrowser;
     public static String buildTag;
     /**
      * Constructs a {@link SauceOnDemandAuthentication} instance using the supplied user name/access key.  To use the authentication
      * supplied by environment variables or from an external file, use the no-arg {@link SauceOnDemandAuthentication} constructor.
      */
-    public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication(username, accesskey);
+    public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication(username, accessKey);
 
     /**
      * JUnit Rule which will mark the Sauce Job as passed/failed when the test succeeds or fails.
@@ -74,7 +80,7 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
      * @param deviceOrientation
      */
 
-    public TestBase(String os, String version, String browser, String deviceName, String deviceOrientation) {
+    public WebBaseTest(String os, String version, String browser, String deviceName, String deviceOrientation) {
         super();
         this.os = os;
         this.version = version;
@@ -88,14 +94,10 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
      * in the String array are used as part of the invocation of the test constructor
      */
     @ConcurrentParameterized.Parameters
-    public static LinkedList browsersStrings() {
-        LinkedList browsers = new LinkedList();
+    public static LinkedList browsersStrings() throws Exception {
+        LinkedList browsers;
+        browsers = getCapabilities();
 
-        browsers.add(new String[]{"Windows 10", "14.14393", "MicrosoftEdge", null, null});
-        browsers.add(new String[]{"Windows 10", "49.0", "firefox", null, null});
-        browsers.add(new String[]{"Windows 7", "11.0", "internet explorer", null, null});
-        browsers.add(new String[]{"OS X 10.11", "10.0", "safari", null, null});
-        browsers.add(new String[]{"OS X 10.10", "54.0", "chrome", null, null});
         return browsers;
     }
 
@@ -124,11 +126,16 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
         if (buildTag != null) {
             capabilities.setCapability("build", buildTag);
         }
-        this.driver = new RemoteWebDriver(
-                new URL("http://" + username + ":" + accesskey + "@ondemand.saucelabs.com:"+ port + "/wd/hub"), capabilities);
 
+        if(isRemote){
+            this.driver = new RemoteWebDriver(
+                    new URL("http://" + username + ":" + accessKey + "@ondemand.saucelabs.com:"+
+                            port + "/wd/hub"), capabilities);
+            this.sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
+        }else{
+            this.driver = DriverWeb.getWebDriver(localBrowser);
+        }
 
-        this.sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
     }
 
     @After
@@ -154,5 +161,38 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
         if (buildTag == null) {
             buildTag = System.getenv("SAUCE_BUILD_NAME");
         }
+    }
+    private static LinkedList getCapabilities() throws Exception {
+        LinkedList browsers = new LinkedList();
+        String jsonString = util.getCapabilities("WebDriverConfig.properties",false);
+        JSONObject mainJsonObject = new JSONObject(jsonString);
+        JSONArray dataArray = mainJsonObject.getJSONArray("capabilities");
+        for (int i = 0; i < dataArray.length(); i++) {
+            JSONObject jsonObject = dataArray.getJSONObject(i);
+            if(i==0){
+                isRemote=Boolean.parseBoolean(jsonObject.get("isRemote").toString());
+                username=jsonObject.get("username").toString();
+                password=jsonObject.get("password").toString();
+                accessKey=jsonObject.get("key").toString();
+                port=jsonObject.get("port").toString();
+                localBrowser=jsonObject.get("localBrowser").toString();
+
+            }else{
+                if(isRemote){
+                    browsers.add(new String[]{jsonObject.get("platform").toString(),
+                            jsonObject.get("browserVersion").toString(),
+                            jsonObject.get("browser").toString(), null, null});
+                }else{
+                    browsers.add(new String[]{null,
+                            null,
+                            null, null, null});
+                    break;
+                }
+
+            }
+
+        }
+        return browsers;
+
     }
 }

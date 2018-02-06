@@ -1,0 +1,85 @@
+[ {
+  "line" : 2,
+  "elements" : [ {
+    "line" : 3,
+    "name" : "Testing",
+    "description" : "",
+    "id" : "test1;testing",
+    "type" : "scenario",
+    "keyword" : "Scenario",
+    "steps" : [ {
+      "result" : {
+        "duration" : 5972577421,
+        "status" : "passed"
+      },
+      "line" : 4,
+      "name" : "I go to X page",
+      "match" : {
+        "location" : "MyStepdefs.iGoToXPage()"
+      },
+      "keyword" : "When "
+    }, {
+      "result" : {
+        "duration" : 91700228,
+        "status" : "passed"
+      },
+      "line" : 5,
+      "name" : "I see that element",
+      "match" : {
+        "location" : "MyStepdefs.i_see_that_element()"
+      },
+      "keyword" : "Then "
+    } ]
+  } ],
+  "name" : "Test1",
+  "description" : "",
+  "id" : "test1",
+  "keyword" : "Feature",
+  "uri" : "src/test/resources/features/test.feature",
+  "tags" : [ {
+    "line" : 1,
+    "name" : "@regression"
+  } ]
+} , {
+  "line" : 2,
+  "elements" : [ {
+    "line" : 3,
+    "name" : "testing parallel",
+    "description" : "",
+    "id" : "test2;testing-parallel",
+    "type" : "scenario",
+    "keyword" : "Scenario",
+    "steps" : [ {
+      "result" : {
+        "duration" : 9179978815,
+        "status" : "passed"
+      },
+      "line" : 4,
+      "name" : "I go to home page",
+      "match" : {
+        "location" : "MyStepdefs3.iGoToXPage()"
+      },
+      "keyword" : "When "
+    }, {
+      "result" : {
+        "duration" : 199771775,
+        "status" : "passed"
+      },
+      "line" : 5,
+      "name" : "I check the title of the page",
+      "match" : {
+        "location" : "MyStepdefs3.i_see_that_element()"
+      },
+      "keyword" : "Then "
+    } ]
+  } ],
+  "name" : "test2",
+  "description" : "",
+  "id" : "test2",
+  "keyword" : "Feature",
+  "uri" : "src/test/resources/features/test2.feature",
+  "tags" : [ {
+    "line" : 1,
+    "name" : "@regression"
+  } ]
+} ]

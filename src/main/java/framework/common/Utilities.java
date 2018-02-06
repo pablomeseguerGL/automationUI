@@ -13,11 +13,11 @@ import java.util.Properties;
  */
 public class Utilities {
 
-    public String getCapabilities(String name) throws Exception {
+    public String getCapabilities(String name,boolean validateRequiredFields) throws Exception {
         String initialRead = "";
         String finalRead = "";
         String strLine;
-
+        int line = 0;
         // Open the file
         FileInputStream fstream = new FileInputStream(name);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -25,7 +25,7 @@ public class Utilities {
         //Read File Line By Line
         while ((strLine = br.readLine()) != null) {
             if (strLine != null) {
-                if (strLine.contains("#") && strLine.contains("iOS")) {
+                if (line==0) {
                     initialRead = "{";
                 } else if (strLine.contains("#")) {
                     initialRead = initialRead + "},{";
@@ -33,6 +33,7 @@ public class Utilities {
                     initialRead = initialRead + "\"" + strLine.replace('=', ':') + ",";
                 }
             }
+            line++;
         }
 
         String[] parts = initialRead.split(",");
@@ -65,16 +66,17 @@ public class Utilities {
 
         //Close the input stream
         br.close();
-        Boolean validation = false;
-        validation = dataValidator(finalRead);
+        if (validateRequiredFields) {
+            Boolean validation = false;
+            validation = dataValidator(finalRead);
 
-        System.out.println(finalRead);
+            System.out.println(finalRead);
 
-        if(validation == true){
-        }else{
-        throw new Exception("Required capabilities are missing");
+            if (validation == true) {
+            } else {
+                throw new Exception("Required capabilities are missing");
+            }
         }
-
         return finalRead;
     }
 

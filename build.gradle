@@ -9,8 +9,12 @@ plugins {
     id 'io.franzbecker.gradle-lombok' version '1.11'
 }
 
+
+
+
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 
@@ -22,7 +26,33 @@ lombok {
     version = "1.16.4"
     sha256 = "3ca225ce3917eac8bf4b7d2186845df4e70dcdede356dca8537b6d78a535c91e"
 }
-sourceCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'com.saucelabs', name: 'sauce_junit', version: '2.1.23'
+    //testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '1.2.5'
+
+
+
+
+  //compile group: 'info.cukes', name: 'cucumber-core', version: '1.2.5'
+    compile group: 'io.cucumber', name: 'gherkin', version: '5.0.0'
+  //compile group: 'io.cucumber', name: 'cucumber-java', version: '1.2.5'
+    //compile group: 'io.cucumber', name: 'cucumber-java8', version: '1.2.5'
+
+    compile 'io.github.prashant-ramcharan:courgette-jvm:1.4.3'
+    compile group: 'org.json', name: 'json', version: '20171018'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    compile group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA'
+    compile group: 'net.masterthought', name: 'cucumber-reporting', version: '3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
+    compile group: 'io.appium', name: 'java-client', version: '6.0.0-BETA2'
+
+   // compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.8'
+
+
+
+}
 
 //Tasks
 
@@ -35,28 +65,32 @@ task delombok(type: DelombokTask, dependsOn: compileJava) {
     }
 }
 
+
 task delombokHelp(type: DelombokTask) {
     args "--help"
+}
+
+//Task for run parallel
+tasks.withType(Test) {
+    systemProperties = System.getProperties()
+}
+
+task runFeatures(type: Test) {
+    include '**/FeatureSuite.class'
+    outputs.upToDateWhen { false }
+}
+
+task runScenarios(type: Test) {
+    include '**/ScenarioSuite.class'
+    outputs.upToDateWhen { false }
+}
+
+task runScenariosWithFailure(type: Test) {
+    include '**/ScenarioWithFailureSuite.class'
+    outputs.upToDateWhen { false }
 }
 
 
 //Dependencies for packages
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'com.saucelabs', name: 'sauce_junit', version: '2.1.23'
 
-    testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '2.3.1'
-    compile group: 'io.cucumber', name: 'cucumber-core', version: '2.3.1'
-    compile group: 'io.cucumber', name: 'gherkin', version: '5.0.0'
-    compile group: 'io.cucumber', name: 'cucumber-java', version: '2.3.1'
-    compile group: 'io.cucumber', name: 'cucumber-java8', version: '2.3.1'
-
-    compile group: 'org.json', name: 'json', version: '20171018'
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-    compile group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA'
-    compile group: 'net.masterthought', name: 'cucumber-reporting', version: '3.14.0'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
-    compile group: 'io.appium', name: 'java-client', version: '6.0.0-BETA2'
-
-}
