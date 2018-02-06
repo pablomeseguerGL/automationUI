@@ -1,5 +1,6 @@
 package framework.config;
 
+//import com.saucelabs.common.SauceOnDemandAuthentication;
 import framework.common.Utilities;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,13 +8,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.LinkedList;
+
 
 public class DriverWeb {
 
@@ -24,81 +24,97 @@ public class DriverWeb {
     public static String password;
     public static String accessKey;
     public static String port;
-    public static String localBrowser;
+    public static String browserVersion;
+    public static String platform;
     public static Utilities util;
     public static String testName;
-
-    public static WebDriver getWebDriver(String localBrowser) {
-       // util = new Utilities();
-       // testName = testNameP;
+   // public static SauceOnDemandAuthentication authentication;
 
 
-        browser=localBrowser;
+    public static WebDriver getWebDriver(String testNameP) throws Exception {
+        util = new Utilities();
+        testName = testNameP;
+        readConfiguration();
+        if(isRemote){
 
-        switch (browser.toLowerCase()) {
-            case "firefox":
-                System.setProperty("webdriver.gecko.driver", "./Resources/geckodriver");
-                myDriver = new FirefoxDriver();
-                break;
+     //       authentication = new SauceOnDemandAuthentication(username, accessKey);
 
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", "./Resources/chromedriver");
-                myDriver = new ChromeDriver();
-                break;
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
+            capabilities.setCapability(CapabilityType.VERSION, browserVersion);
+            capabilities.setCapability(CapabilityType.PLATFORM, platform);
+            capabilities.setCapability("name", testNameP);
 
-            case "safari":
-                myDriver = new SafariDriver();
-                break;
+            myDriver = new RemoteWebDriver(
+                        new URL("http://" + username + ":" + accessKey + "@ondemand.saucelabs.com:"+
+                                port + "/wd/hub"), capabilities);
+        }else{
+            switch (browser.toLowerCase()) {
+                case "firefox":
+                    System.setProperty("webdriver.gecko.driver", "./Resources/geckodriver");
+                    myDriver = new FirefoxDriver();
+                    break;
 
-            case "internetExplorer":
-               // if (platform.toLowerCase().equals("mac")) {
-               //     throw new RuntimeException("Internet Explorer not supported on MAC platform");
-               // }
-                System.setProperty("webdriver.ie.driver", "./Resources/MicrosoftWebDriver.exe");
-                myDriver = new InternetExplorerDriver();
-                break;
+                case "chrome":
+                    System.setProperty("webdriver.chrome.driver", "./Resources/chromedriver");
+                    myDriver = new ChromeDriver();
+                    break;
 
-            default:
-                throw new RuntimeException("Browser Type not supported. " +
-                        "Only Firefox, Chrome, Safari, HtmlUnitDriver and InternetExplorer(Only Windows) browsers are supported");
+                case "safari":
+                    myDriver = new SafariDriver();
+                    break;
+
+                case "internetExplorer":
+                    // if (platform.toLowerCase().equals("mac")) {
+                    //     throw new RuntimeException("Internet Explorer not supported on MAC platform");
+                    // }
+                    System.setProperty("webdriver.ie.driver", "./Resources/MicrosoftWebDriver.exe");
+                    myDriver = new InternetExplorerDriver();
+                    break;
+
+                default:
+                    throw new RuntimeException("Browser Type not supported. " +
+                            "Only Firefox, Chrome, Safari, HtmlUnitDriver and InternetExplorer(Only Windows) browsers are supported");
+            }
+
         }
+
 
         return myDriver;
 
     }
-  /*  private void readConfiguration() throws Exception {
+    private static void readConfiguration() throws Exception {
 
-        String jsonString = util.getCapabilities("WebDriverConfig.properties",false);
+        String jsonString = util.getCapabilities("WebDriverConfig.properties", false);
         JSONObject mainJsonObject = new JSONObject(jsonString);
         JSONArray dataArray = mainJsonObject.getJSONArray("capabilities");
         for (int i = 0; i < dataArray.length(); i++) {
             JSONObject jsonObject = dataArray.getJSONObject(i);
-            if(i==0){
-                isRemote=Boolean.parseBoolean(jsonObject.get("isRemote").toString());
-                username=jsonObject.get("username").toString();
-                password=jsonObject.get("password").toString();
-                accessKey=jsonObject.get("key").toString();
-            }else{
-                if(testName.equals(jsonObject.get("testName").toString())){
-                    browsers.add(new String[]{jsonObject.get("platform").toString(),
-                            jsonObject.get("browserVersion").toString(),
-                            jsonObject.get("browser").toString(), null, null});
-                }else{
-                    browsers.add(new String[]{null,
-                            null,
-                            null, null, null});
-                    break;
+            if (i == 0) {
+                username = jsonObject.get("username").toString();
+                password = jsonObject.get("password").toString();
+                accessKey = jsonObject.get("key").toString();
+            } else {
+                if (testName.equals(jsonObject.get("testName").toString())) {
+                    isRemote = Boolean.parseBoolean(jsonObject.get("isRemote").toString());
+                    if (isRemote) {
+                        browser = jsonObject.get("browser").toString();
+                        platform = jsonObject.get("platform").toString();
+                        browserVersion = jsonObject.get("browserVersion").toString();
+                        port = jsonObject.get("port").toString();
+                    } else {
+                        browser = jsonObject.get("browser").toString();
+                        platform = jsonObject.get("platform").toString();
+                    }
+
                 }
 
             }
 
-        }
-        return browsers;
 
+        }
 
     }
-*/
-
 
 
 

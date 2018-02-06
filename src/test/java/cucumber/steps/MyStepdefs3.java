@@ -18,7 +18,7 @@ public class MyStepdefs3{
 
     @When("^I go to home page$")
     public void iGoToXPage() throws Throwable {
-        driver = DriverWeb.getWebDriver("firefox");
+        driver = DriverWeb.getWebDriver("test2");
         driver.get("https://www.google.es/");
         Thread.sleep(2000);
     }

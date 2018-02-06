@@ -19,7 +19,7 @@ public class MyStepdefs {
 
     @When("^I go to X page$")
     public void iGoToXPage() throws Throwable {
-        driver = DriverWeb.getWebDriver("chrome");
+        driver = DriverWeb.getWebDriver("test");
         driver.get("https://www.google.com/");
         Thread.sleep(2000);
     }
