@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static framework.config.DriverMobile.getJsonProperties;
+
 
 /**
  * Created by pablomeseguer on 1/30/18.
@@ -26,7 +26,7 @@ public class MobileCapabilities {
 
 
 
-    private static String getCapabiltiiesJson(){
+    public static String getCapabiltiiesJson(){
 
         String capabilitiesList = null;
         Utilities utilities = new Utilities();
