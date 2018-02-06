@@ -1,162 +1,178 @@
 package framework.config;
-
-/**
- * Created by pablomeseguer on 1/30/18.
- */
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.*;
+import cucumber.api.java.it.Ma;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+
+import io.appium.java_client.*;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
-public class DriverMobile extends MobileCapabilities  {
+import static framework.config.MobileCapabilities.getCapabiltiiesJson;
 
 
-    public  static AppiumDriver appiumDriver;
-    Capabilities capabilities;
+/**
+ * Created by pablomeseguer on 1/29/18.
+ */
+public class DriverMobile  {
+
+
+
+    public static AppiumDriver<WebElement> driver;
+
+    public static  ArrayList<DesiredCapabilities> listCapabilities=new ArrayList<>();
+    String capabilities;
+
 
     public DriverMobile() {
-
-
-
-        this.capabilities=capabilities;
-
         AppiumServerJava appiumServer = new AppiumServerJava();
 
-        int port = 5000;
+        int port = 4723;
         if(!appiumServer.checkIfServerIsRunnning(port)) {
             appiumServer.startServer(port);
+            //   appiumServer.stopServer();
         } else {
             System.out.println("Appium Server already running on Port - " + port);
         }
-
-
-
+        this.capabilities=capabilities;
+        listCapabilities=generateCapabilities(capabilities);
+        capabilities=  getCapabiltiiesJson();
     }
 
-    public static DesiredCapabilities ignoreCapabilities(DesiredCapabilities capability,String deleteCapability) {
-        DesiredCapabilities capabilityValue=new DesiredCapabilities();
-        for (String capabilityTemp : capability.toString().replace("Capabilities {","").replace("}","")
-                .split(",")) {
-         String[]  capabilityTempSecondLevel=  capabilityTemp.split(":");
-            if(!capabilityTempSecondLevel[0].contains(deleteCapability)){
-                capabilityValue.setCapability(capabilityTempSecondLevel[0],capabilityTempSecondLevel[1]);
+
+
+    public static ArrayList<DesiredCapabilities> generateCapabilities(String capabilities){
+
+        JsonParser jsonObject = new JsonParser();
+        JsonObject jsonObjet = jsonObject.parse(capabilities).getAsJsonObject();
+        JsonObject jsonObjetAsJsonObject = jsonObjet.getAsJsonObject();
+        boolean execution=false;
+        for(JsonElement jsonElement:jsonObjetAsJsonObject.get("capabilities").getAsJsonArray()){
+            DesiredCapabilities capabilitiesObjet=new DesiredCapabilities();
+            for(int i=0;i<=jsonElement.getAsJsonObject().entrySet().toArray().length-1;i++){
+
+                String[] capabilityObject=   jsonElement.getAsJsonObject().entrySet().toArray()[i].toString().split("=");
+                if(capabilityObject[0].toString().contains("run")){
+                    if(capabilityObject[1].toString().contains("yes")){
+                        execution=true;
+                    }
+
+                }
+
+                if(execution && !capabilityObject[1].toString().contains("yes")){
+
+                    capabilitiesObjet.setCapability(capabilityObject[0].toString(),capabilityObject[1].toString().toString().replace("\"",""));
+
+                }
+
+
+            }
+            if(execution){
+
+                listCapabilities.add(capabilitiesObjet);
+            }
+            execution=false;
+
+        }
+
+        return listCapabilities;
+    }
+
+    public static   ArrayList<DesiredCapabilities> searchCapability(String property, String value){
+        ArrayList<DesiredCapabilities> capabilities=new ArrayList<>();
+        for(DesiredCapabilities capability :listCapabilities){
+            if(capability.getCapability(property).toString().contains(value)){
+                capabilities.add(capability);
             }
 
         }
-        return capabilityValue;
-    }
-
-    public static AppiumDriver<?> returnDriver(String platformName,DesiredCapabilities capabilitiesObjet) {
-
-
-        final String URL_STRING = "";
-        String typeExecution="";
-        AppiumDriver<?> appiumDriver = null;
-
-
-
-
-        Boolean isRemote=false;
-        String url="";
-
-
-
-        switch (platformName.toLowerCase()) {
-
-            case "android":
-                try {
-
-
-                    url=  capabilitiesObjet.getCapability("url").toString();
-                    capabilitiesObjet= ignoreCapabilities(capabilitiesObjet,"url");
-                    capabilitiesObjet= ignoreCapabilities(capabilitiesObjet,"app");
-                    capabilitiesObjet.setCapability("app","/Users/pablomeseguer/Desktop/Demogloo/PatientEngagement-Apperian.apk");
-                    if(isRemote) {
-
-
-
-                        appiumDriver = (AppiumDriver<WebElement>) new RemoteWebDriver(new URL(url), capabilitiesObjet);
-                    }
-                    else
-                    {
-                        appiumDriver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesObjet);
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "ios":
-                try {
-
-                    url=  capabilitiesObjet.getCapability("url").toString();
-                    capabilitiesObjet= ignoreCapabilities(capabilitiesObjet,"url");
-                    if(isRemote) {
-                        appiumDriver = (AppiumDriver<WebElement>) new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesObjet);
-                    }
-                    else
-                    {
-                        appiumDriver = new IOSDriver<>(new URL(url), capabilitiesObjet);
-                    }
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-        }
-        return appiumDriver;
-
+        return capabilities;
 
     }
 
+    public   AppiumDriver<?> getDriver(String platformName ) throws Exception {
+        {
+
+            AppiumDriver<?> appiumDriver = null;
+
+
+
+
+            Boolean isRemote=false;
+            String url="";
+
+
+
+            switch (platformName.toLowerCase()) {
+
+                case "android":
+                    try {
+
+                        if(isRemote) {
+
+                         //   appiumDriver = (AppiumDriver<WebElement>) new RemoteWebDriver(new URL(url), capabilitiesObjet);
+                        }
+                        else
+                        {
+                            DesiredCapabilities desiredCapabilities = searchCapability("platformName", "Android").get(0);
+
+                            final String URL_STRING = "";
+                            String urltemp = desiredCapabilities.getCapability("url").toString();
+
+                            driver = new AndroidDriver<WebElement>(new URL(urltemp), desiredCapabilities);
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "ios":
+
+                    try {
+
+
+                        if(isRemote) {
+                       //     appiumDriver = (AppiumDriver<WebElement>) new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesObjet);
+                        }
+                        else
+                        {
+                            DesiredCapabilities desiredCapabilities = searchCapability("platformName", "iOS").get(0);
+
+                            final String URL_STRING = "";
+                            String urltemp = desiredCapabilities.getCapability("url").toString();
+
+                            driver = new IOSDriver<WebElement>(new URL(urltemp), desiredCapabilities);
+                        }
+
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+            }
 
 
 
 
 
 
-
-
-
-
-/*
-    public void parallelExecution(String driverType){
-
-        switch (driverType.toLowerCase()) {
-            case "android":
-                Runnable r1 = new framework.config.AndroidDriver(desiredCapabilities);
-                break;
-            case "iOS":
 
         }
 
-*/
-
-
-
-
-
+        return (AndroidDriver) driver;
 
     }
 
 
 
 
-
-
-
+}
 

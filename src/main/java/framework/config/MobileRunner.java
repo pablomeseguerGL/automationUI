@@ -6,7 +6,7 @@ import cucumber.api.java.gl.E;
 import framework.ui.windows.Login;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static framework.config.DriverMobile.getJsonProperties;
+
 import static framework.config.MobileCapabilities.searchCapability;
 
 /**
