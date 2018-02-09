@@ -9,7 +9,7 @@
     "keyword" : "Scenario",
     "steps" : [ {
       "result" : {
-        "duration" : 9181968143,
+        "duration" : 5541984501,
         "status" : "passed"
       },
       "line" : 4,
@@ -20,7 +20,7 @@
       "keyword" : "When "
     }, {
       "result" : {
-        "duration" : 428577091,
+        "duration" : 89237369,
         "status" : "passed"
       },
       "line" : 5,
@@ -51,7 +51,7 @@
     "keyword" : "Scenario",
     "steps" : [ {
       "result" : {
-        "duration" : 51686525201,
+        "duration" : 8267164916,
         "status" : "passed"
       },
       "line" : 4,
@@ -62,7 +62,7 @@
       "keyword" : "When "
     }, {
       "result" : {
-        "duration" : 521011394,
+        "duration" : 163633777,
         "status" : "passed"
       },
       "line" : 5,

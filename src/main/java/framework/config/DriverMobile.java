@@ -30,10 +30,11 @@ public class DriverMobile  {
     public static AppiumDriver<WebElement> driver;
 
     public static  ArrayList<DesiredCapabilities> listCapabilities=new ArrayList<>();
-    String capabilities;
+
 
 
     public DriverMobile() {
+
         AppiumServerJava appiumServer = new AppiumServerJava();
 
         int port = 4723;
@@ -43,9 +44,10 @@ public class DriverMobile  {
         } else {
             System.out.println("Appium Server already running on Port - " + port);
         }
-        this.capabilities=capabilities;
+
+        String capabilities = getCapabiltiiesJson();
         listCapabilities=generateCapabilities(capabilities);
-        capabilities=  getCapabiltiiesJson();
+
     }
 
 

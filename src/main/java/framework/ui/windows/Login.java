@@ -13,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 import io.appium.java_client.pagefactory.AndroidFindBy;
         import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.AssertTrue;
 import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,59 +27,38 @@ import static framework.config.MobileCapabilities.getCapabilities;
 /**
  * Created by pablomeseguer on 1/30/18.
  */
-public class Login   implements Runnable  {
+public class Login {
+
+    AppiumDriver<?> driver;
 
 
-    DesiredCapabilities capabilities;
-    ArrayList<DesiredCapabilities> listCapability=new ArrayList<>();
-
-
-            String platformName;
-    public Login(String platformName) {
-
-         this.platformName=platformName;
-         listCapability= getCapabilities(platformName);
+    public Login(  AppiumDriver<?> driver) {
+        this.driver=driver;
+        PageFactory.initElements( new AppiumFieldDecorator(driver),this);
 
     }
 
     @AndroidFindBy(id="username_edit_text")
-    @iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextField[1]")
+    @iOSFindBy( id="username_edit_text")
     @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
     private WebElement userNameTextBox;
 
 
     @AndroidFindBy(id="password_edit_text")
-    @iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextField[1]")
+    @iOSFindBy(id="password_edit_text")
     @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
     private WebElement passWordTextBox;
 
     @AndroidFindBy(id="login_button")
-    @iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextField[1]")
+    @iOSFindBy(id="login_button")
     @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
-
+    @AssertTrue(message = "Element found")
+    @AssertFalse(message = "Element not found")
     private WebElement loginButon;
 
 
 
-    public void installApp() {
-      DesiredCapabilities cap=  listCapability.get(0);
 
-
-            DriverMobile driver=new DriverMobile();
-
-
-
-       // AppiumDriver<?> d=    driver.getDriver();
-        try {
-         AppiumDriver<?> driver1=driver.getDriver("sd");
-            PageFactory.initElements( new AppiumFieldDecorator(driver1),this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
 
     public void addUserName(){
         userNameTextBox.sendKeys("hola");
@@ -91,39 +72,6 @@ public class Login   implements Runnable  {
         loginButon.click();
     }
 
-    public static void main() {
-
-
-        /*
-        Runnabler1 = new Login(capabilities);
-        List<Runnable> runnables;
-      for (DesiredCapabilities capabilities:getCapabilities("Android")){
-
-          runnables.add()
-      }
-
-      }
-        for(){
-
-        new Thread(r1).start();
-
-
-   List<Runnable> runnings;
-        LinkedList browsers = new LinkedList();
-for (DesiredCapabilities capa:getCapabilities("Android")){
-
-    browsers.add( new Login(capa));
-}
-for (Object n:browsers){
-    new Thread((Runnable) n).start();
-}
-*/
-    }
-
-    @Override
-    public void run() {
-
-    }
 
 
 
