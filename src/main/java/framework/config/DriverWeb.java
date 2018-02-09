@@ -1,6 +1,8 @@
 package framework.config;
 
-//import com.saucelabs.common.SauceOnDemandAuthentication;
+
+import cucumber.api.Scenario;
+import framework.common.SauceUtils;
 import framework.common.Utilities;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +14,10 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+
+import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 
 public class DriverWeb {
@@ -28,7 +33,7 @@ public class DriverWeb {
     public static String platform;
     public static Utilities util;
     public static String testName;
-   // public static SauceOnDemandAuthentication authentication;
+    public static String sessionId;
 
 
     public static WebDriver getWebDriver(String testNameP) throws Exception {
@@ -48,6 +53,8 @@ public class DriverWeb {
             myDriver = new RemoteWebDriver(
                         new URL("http://" + username + ":" + accessKey + "@ondemand.saucelabs.com:"+
                                 port + "/wd/hub"), capabilities);
+            sessionId = (((RemoteWebDriver) myDriver).getSessionId()).toString();
+
         }else{
             switch (browser.toLowerCase()) {
                 case "firefox":
@@ -79,7 +86,7 @@ public class DriverWeb {
 
         }
 
-
+//        myDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return myDriver;
 
     }
@@ -114,6 +121,18 @@ public class DriverWeb {
 
         }
 
+    }
+
+    public static void setResults(Scenario scenario){
+
+        if(isRemote) {
+
+            try {
+                SauceUtils.UpdateResults(username, accessKey, !scenario.isFailed(), sessionId);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
