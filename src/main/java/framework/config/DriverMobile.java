@@ -34,7 +34,7 @@ public class DriverMobile  {
 
 
     public DriverMobile() {
-
+//Dinamico los puertos
         AppiumServerJava appiumServer = new AppiumServerJava();
 
         int port = 4723;

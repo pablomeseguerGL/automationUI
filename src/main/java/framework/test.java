@@ -1,11 +1,7 @@
 package framework;
 
-import framework.common.Utilities;
 import framework.config.DriverMobile;
-import framework.ui.windows.Login;
 
-
-import java.io.IOException;
 
 import static framework.config.MobileCapabilities.getCapabiltiiesJson;
 

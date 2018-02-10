@@ -1,6 +1,23 @@
 [ {
   "line" : 2,
   "elements" : [ {
+    "before" : [ {
+      "result" : {
+        "duration" : 115233,
+        "status" : "passed"
+      },
+      "match" : {
+        "location" : "MyStepdefs.setUp(Scenario)"
+      }
+    }, {
+      "result" : {
+        "duration" : 45561,
+        "status" : "passed"
+      },
+      "match" : {
+        "location" : "MyStepdefs3.setUp(Scenario)"
+      }
+    } ],
     "line" : 3,
     "name" : "Testing",
     "description" : "",
@@ -9,7 +26,7 @@
     "keyword" : "Scenario",
     "steps" : [ {
       "result" : {
-        "duration" : 5541984501,
+        "duration" : 8185575107,
         "status" : "passed"
       },
       "line" : 4,
@@ -20,7 +37,7 @@
       "keyword" : "When "
     }, {
       "result" : {
-        "duration" : 89237369,
+        "duration" : 106361919,
         "status" : "passed"
       },
       "line" : 5,
@@ -43,6 +60,23 @@
 } , {
   "line" : 2,
   "elements" : [ {
+    "before" : [ {
+      "result" : {
+        "duration" : 225745,
+        "status" : "passed"
+      },
+      "match" : {
+        "location" : "MyStepdefs.setUp(Scenario)"
+      }
+    }, {
+      "result" : {
+        "duration" : 85964,
+        "status" : "passed"
+      },
+      "match" : {
+        "location" : "MyStepdefs3.setUp(Scenario)"
+      }
+    } ],
     "line" : 3,
     "name" : "testing parallel",
     "description" : "",
@@ -51,7 +85,7 @@
     "keyword" : "Scenario",
     "steps" : [ {
       "result" : {
-        "duration" : 8267164916,
+        "duration" : 12200319212,
         "status" : "passed"
       },
       "line" : 4,
@@ -62,7 +96,7 @@
       "keyword" : "When "
     }, {
       "result" : {
-        "duration" : 163633777,
+        "duration" : 312082167,
         "status" : "passed"
       },
       "line" : 5,
