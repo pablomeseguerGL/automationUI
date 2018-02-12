@@ -106,7 +106,7 @@ public class Utilities {
         return false;
     }
 
-    public String getProperty(String fileName, String property) {
+    public static String getProperty(String fileName, String property) {
         Properties prop = new Properties();
         InputStream input = null;
         String value="";
@@ -129,4 +129,8 @@ public class Utilities {
         }
         return value;
     }
+
+
+
+
 }

@@ -12,9 +12,9 @@ import java.util.Map;
 public class DriverWait {
 
 
-    AppiumDriver<WebElement> driver;
-    public DriverWait(AppiumDriver<?> driver) {
-     this.driver= (AppiumDriver<WebElement>) driver;
+    AppiumDriver<?> driver;
+    public DriverWait( AppiumDriver<?> driver) {
+     this.driver= driver;
 
     }
 
