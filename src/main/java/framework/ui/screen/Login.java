@@ -7,7 +7,9 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.WithTimeout;
 import io.appium.java_client.pagefactory.iOSFindBy;
-import lombok.*;
+import lombok.Data;
+import  lombok.NoArgsConstructor;
+import lombok.Generated;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +21,8 @@ import javax.validation.constraints.AssertTrue;
 import java.util.concurrent.TimeUnit;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+import lombok.Getter;
+import lombok.Setter;
 
 
 
@@ -28,8 +31,8 @@ import com.google.gson.JsonParser;
 /**
  * Created by pablomeseguer on 1/30/18.
  */
-@Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
+@Data
+@NoArgsConstructor
 public class Login {
 
     AppiumDriver<?> driver;
@@ -45,24 +48,44 @@ public class Login {
     }
 
 
-
-    @iOSFindBy( id="username_edit_text")
+    @AndroidFindBy(id="landing_already_have_account_button")
+    // @iOSFindBy(id="login_button")
     @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
+    @AssertTrue(message = "Element found")
     @AssertFalse(message = "Element not found")
+    public WebElement alReadyHaveAccountButton;
+
+    @Getter
+    @AndroidFindBy(id="login_username")
+    @AssertTrue(message = "Element found")
+    @AssertFalse(message = "Element not found")
+   // @iOSFindBy( id="username_edit_text")
+    @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
     public WebElement userNameTextBox;
 
 
-    @AndroidFindBy(id="password_edit_text")
-    @iOSFindBy(id="password_edit_text")
+    @AndroidFindBy(id="login_password")
+    @AssertTrue(message = "Element found")
+    @AssertFalse(message = "Element not found")
+   // @iOSFindBy(id="password_edit_text")
     @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
     public WebElement passWordTextBox;
 
-    @AndroidFindBy(id="login_button")
-    @iOSFindBy(id="login_button")
+    @AndroidFindBy(id="login_signin_button")
+   // @iOSFindBy(id="login_button")
     @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
     @AssertTrue(message = "Element found")
     @AssertFalse(message = "Element not found")
     public WebElement loginButon;
+
+    @AndroidFindBy(id="toolbar_title")
+    // @iOSFindBy(id="login_button")
+    @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
+    @AssertTrue(message = "Element found")
+    @AssertFalse(message = "Element not found")
+    public WebElement homeElement;
+
+
 
 
 

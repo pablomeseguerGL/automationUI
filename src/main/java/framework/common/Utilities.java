@@ -1,12 +1,17 @@
 package framework.common;
 
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.util.Properties;
+
+import static framework.config.DriverWeb.util;
 
 /**
  * Created by pablomeseguer on 1/29/18.
@@ -127,6 +132,27 @@ public class Utilities {
                 }
             }
         }
+        return value;
+    }
+
+    public  String getSelectors(String featureName, String property ) {
+        Properties prop;
+        String value = null;
+        try {
+            prop = new Properties();
+            String fileName="src/test/java/PageFactory/"+featureName+".properties";
+            prop.load(new FileInputStream(new File(fileName)));
+
+            value = prop.getProperty(property);
+
+            if (value == null || value.isEmpty()) {
+                throw new Exception("Value not set or empty");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return value;
     }
 

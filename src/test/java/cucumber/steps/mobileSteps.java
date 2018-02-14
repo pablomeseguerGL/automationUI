@@ -1,102 +1,94 @@
 package cucumber.steps;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
-import framework.config.DriverMobile;
-import framework.config.DriverWait;
-import framework.ui.screen.Login;
-import io.appium.java_client.AppiumDriver;
-
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import framework.common.Utilities;
+import framework.config.DriverMobile;
+import framework.config.Element;
+import framework.config.Selector;
+import framework.ui.screen.Login;
+import framework.ui.screen.Space;
+import io.appium.java_client.AppiumDriver;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.*;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.Then;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 
+import static framework.config.Selector.generateSelector;
 import static org.assertj.core.api.Assertions.*;
 
 public class mobileSteps  {
 
 
-    DriverMobile driver=new DriverMobile();
-    public static AppiumDriver<?> driverObject;
-@After
-public void INIT() throws Exception {
+    DriverMobile driverMobile=new DriverMobile();
+    WebDriver driver=null;
+    String featureName;
+    @Before
+    public void setUp(Scenario scenario) throws Exception {
+        this.featureName= scenario.getId().split(";")[0];
 
-    Scenario scenario = null;
-    if(scenario.getSourceTagNames().contains("iOS")) {
-        new Login(driver.getDriver("iOS"));
-    }
-    else{
-        new Login(driver.getDriver("Android"));
+
     }
 
 
+
+
+    @When("^I submit username$")
+    public void
+    iSubmitUsername() throws Throwable {
+
+
+    }
+
+    @When("^I submit password$")
+    public void iSubmitPassword() throws Throwable {
+
+
+    }
+
+
+
+    @Given("^Open Android platform$")
+    public void openAndroidPlatform() throws Throwable {
+        this.driver=driverMobile.getDriver("Android");
+
+    }
+
+    @Given("^Open iOS platform$")
+    public void openIOSPlatform() throws Throwable {
+
+    }
+
+
+
+    @And("^I click the \"([^\"]*)\" element$")
+    public void iClickTheElement(String element) throws Throwable {
+       new Selector().getElement(driver,featureName,element).click();
+
+    }
+
+    @And("^I enter \"([^\"]*)\" in the \"([^\"]*)\" field$")
+    public void iEnterInTheField( String value,String element) throws Throwable {
+        new Selector().getElement(driver,featureName,element).sendKeys(value);
+
+    }
+
+    @And("^I \"([^\"]*)\" see the \"([^\"]*)\" element$")
+    public void iSeeTheElement( String value,String elements) throws Throwable {
+
+
+    }
+
+    @And("^element \"([^\"]*)\" will have the \"([^\"]*)\" \"([^\"]*)\"$")
+    public void elementWillHaveThe(String selector, String attribute, String value) throws Throwable {
+
+
+    }
 }
 
-
-    @When("^Open Android app$")
-    public void openAndroidApp() throws Throwable {
-        Scenario scenario = null;
-        if(scenario.getSourceTagNames().contains("Android")) {
-            driver.getDriver("Android");
-        }
-
-    }
-
-    @When("^Open iOS app$")
-    public void openIOSApp() throws Throwable {
-
-    }
-
-
-    @And("^User enters Credentials to LogIn$")
-    public void userEntersCredentialsToLogIn() throws Throwable {
-
-
-
-    }
-
-
-    @When("^Add UserName$")
-    public void addUserName() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @When("^Add PassWord$")
-    public void addPassWord() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^Login was successfully$")
-    public void loginWasSuccessfully() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-}
