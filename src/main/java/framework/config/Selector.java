@@ -3,7 +3,6 @@ package framework.config;
 import framework.common.Utilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class Selector {
 
@@ -18,8 +17,9 @@ public class Selector {
                 "(//*[contains(concat(' ', normalize-space(" + selectorType + "), ' '), ' " + trimmedSelector + " ')])";
         String instance = selectorAndInstance.length == 2 ? "[" + selectorAndInstance[1] + "]" : "";
         String xPath = selectorPath + instance;
-       WebElement element= driver.findElement(By.xpath(xPath));
-        return new Element(element,driver);
+        By locator=By.xpath(xPath);
+
+        return new Element(locator,driver);
 
     }
 
@@ -63,7 +63,7 @@ public class Selector {
         return selectorType;
     }
 
-    public Element getElement(WebDriver driver,String featureName,String property) {
+    public Element getElement(WebDriver driver, String featureName, String property) {
         String[] value=  new Utilities().getSelectors(featureName,property).split("~");
        return generateSelector(value[0],value[1],value[2],driver);
     }

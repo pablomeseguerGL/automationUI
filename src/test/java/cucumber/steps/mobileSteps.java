@@ -12,10 +12,12 @@ import framework.config.Element;
 import framework.config.Selector;
 import framework.ui.screen.Login;
 import framework.ui.screen.Space;
+import gherkin.ast.Background;
 import io.appium.java_client.AppiumDriver;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -32,7 +34,6 @@ public class mobileSteps  {
     @Before
     public void setUp(Scenario scenario) throws Exception {
         this.featureName= scenario.getId().split(";")[0];
-
 
     }
 
@@ -70,8 +71,8 @@ public class mobileSteps  {
     @And("^I click the \"([^\"]*)\" element$")
     public void iClickTheElement(String element) throws Throwable {
        new Selector().getElement(driver,featureName,element).click();
-
     }
+
 
     @And("^I enter \"([^\"]*)\" in the \"([^\"]*)\" field$")
     public void iEnterInTheField( String value,String element) throws Throwable {
@@ -80,8 +81,8 @@ public class mobileSteps  {
     }
 
     @And("^I \"([^\"]*)\" see the \"([^\"]*)\" element$")
-    public void iSeeTheElement( String value,String elements) throws Throwable {
-
+    public void iSeeTheElement( String value,String element) throws Throwable {
+        Assert.assertEquals(new Selector().getElement(driver,featureName,element).isDisplayed(),true);
 
     }
 

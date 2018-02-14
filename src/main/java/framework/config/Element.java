@@ -22,8 +22,8 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
     private WebElement webElement;
     protected boolean needsReload = false;
 
-    public Element(WebElement webElement, WebDriver driver) {
-        this.webElement = webElement;
+    public Element(By by, WebDriver driver) {
+        this.by = by;
         this.driver = driver;
     }
 
@@ -35,27 +35,14 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public void click() {
-        isElementPresent(webElement,4000);
-       webElement.click();
 
-
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(by));
+        element.click();
     }
 
-    public boolean isElementPresent(WebElement elementName, int timeout){
-        //long time = duration.getTime();
-         //TimeUnit unit = duration.getTimeUnit();
-  	try{
-                 // duration.setTime(100, TimeUnit.MILLISECONDS);
-  	        WebDriverWait wait = new WebDriverWait(driver, timeout);
-  	        wait.until(ExpectedConditions.visibilityOf(elementName));
-  	        return true;
-  	}catch(Exception e){
-  	    return false;
-  	}
-         finally {
-               //duration.setTime(time, unit);
-        }
-    }
+
 
     @Override
     public void submit() {
@@ -64,7 +51,10 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-        new DriverWait(driver).waitElementVisibly(webElement).sendKeys(keysToSend);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(by));
+        element.sendKeys(keysToSend);
     }
 
     @Override
@@ -109,7 +99,10 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public boolean isDisplayed() {
-        return false;
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(by));
+      return element.isDisplayed();
     }
 
     @Override
