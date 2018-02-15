@@ -10,8 +10,6 @@ import framework.common.Utilities;
 import framework.config.DriverMobile;
 import framework.config.Element;
 import framework.config.Selector;
-import framework.ui.screen.Login;
-import framework.ui.screen.Space;
 import gherkin.ast.Background;
 import io.appium.java_client.AppiumDriver;
 
@@ -35,7 +33,8 @@ public class mobileSteps  {
     public void setUp(Scenario scenario) throws Exception {
         this.featureName= scenario.getId().split(";")[0];
 
-    }
+        }
+
 
 
 
@@ -70,19 +69,22 @@ public class mobileSteps  {
 
     @And("^I click the \"([^\"]*)\" element$")
     public void iClickTheElement(String element) throws Throwable {
-       new Selector().getElement(driver,featureName,element).click();
+
+       new Selector().getElement(driver,checkLoginSelector(element),element).click();
     }
 
 
     @And("^I enter \"([^\"]*)\" in the \"([^\"]*)\" field$")
     public void iEnterInTheField( String value,String element) throws Throwable {
-        new Selector().getElement(driver,featureName,element).sendKeys(value);
+
+        new Selector().getElement(driver,checkLoginSelector(element),element).sendKeys(value);
 
     }
 
     @And("^I \"([^\"]*)\" see the \"([^\"]*)\" element$")
     public void iSeeTheElement( String value,String element) throws Throwable {
-        Assert.assertEquals(new Selector().getElement(driver,featureName,element).isDisplayed(),true);
+
+        Assert.assertEquals(new Selector().getElement(driver,checkLoginSelector(element),element).isDisplayed(),true);
 
     }
 
@@ -90,6 +92,17 @@ public class mobileSteps  {
     public void elementWillHaveThe(String selector, String attribute, String value) throws Throwable {
 
 
+    }
+
+
+    public String  checkLoginSelector(String element){
+        if(element.contains("~Login")){
+            return "login";
+        }
+        else
+        {
+            return this.featureName;
+        }
     }
 }
 

@@ -1,22 +1,27 @@
-Feature: Space
-  Description: The purpose of this feature is to test the auth per platform
+Feature: space
+
   Background:User is Logged In Android
     Given Open Android platform
-    And I click the "alreadyHaveAccountButton" element
-    And I enter "glooaccount2017" in the "loginUserNameTextBox" field
-    And I enter "gorilla" in the "loginPassWordTextBox" field
-    And I click the "loginButton" element
-    And I "will" see the "homeText" element
-    And I click the "homeText" element
+    And I click the "alreadyHaveAccountButton~Login" element
+    And I enter "glooaccount2017" in the "loginUserNameTextBox~Login" field
+    And I enter "gorilla" in the "loginPassWordTextBox~Login" field
+    And I click the "loginButton~Login" element
+   # And I "will" see the "homeText~Login" element
 
 
+  Scenario: :Create a new space
 
-  Scenario: Open Message scenario
     And I click the "createSpace" element
+    And I click the "messages" element
+    #And I "will" see the "newSpaceOption" element
+    #And I click the "createSpace" element
+  #  And I click the "agreeSection" element
+   # And I click the "actionCreateSpace" element
+   # And I "will" see the "newSpaceOption" element
+   # And I click the "newSpaceOption" element
+    # And I click the "newSpaceOption" element
+    #And I enter "gorillaSpace" in the "newSpaceName" field
 
-
-  Scenario: Open Message scenario
-    And I click the "library" element
 
 
 

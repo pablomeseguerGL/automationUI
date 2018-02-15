@@ -9,6 +9,7 @@ public class Selector {
     public static Element generateSelector( String selector,String selectorTypeValue, String platform ,WebDriver driver) {
 
         String appPackage = "com.gloo.polymerandroid";
+
         String[] selectorAndInstance = selector.split(":");
         String selectorType =getTypeSelector(platform ,selectorTypeValue);
 

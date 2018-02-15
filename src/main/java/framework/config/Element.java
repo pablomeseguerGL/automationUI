@@ -36,7 +36,7 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
     @Override
     public void click() {
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
         WebElement element = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(by));
         element.click();
@@ -51,7 +51,7 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
         WebElement element = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(by));
         element.sendKeys(keysToSend);
