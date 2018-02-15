@@ -3,7 +3,15 @@
   "elements" : [ {
     "before" : [ {
       "result" : {
-        "duration" : 115233,
+        "duration" : 806109134,
+        "status" : "passed"
+      },
+      "match" : {
+        "location" : "mobileSteps.setUp(Scenario)"
+      }
+    }, {
+      "result" : {
+        "duration" : 550577511,
         "status" : "passed"
       },
       "match" : {
@@ -11,48 +19,71 @@
       }
     }, {
       "result" : {
-        "duration" : 45561,
+        "duration" : 67519,
         "status" : "passed"
       },
       "match" : {
         "location" : "MyStepdefs3.setUp(Scenario)"
       }
     } ],
-    "line" : 3,
+    "line" : 4,
     "name" : "Testing",
     "description" : "",
-    "id" : "test1;testing",
+    "id" : "open-gloo-demo-page;testing",
     "type" : "scenario",
     "keyword" : "Scenario",
     "steps" : [ {
       "result" : {
-        "duration" : 8185575107,
+        "duration" : 9661281055,
         "status" : "passed"
       },
-      "line" : 4,
-      "name" : "I go to X page",
+      "line" : 5,
+      "name" : "I go to \"https://www.gloo.us/demo?hsCtaTracking=0c18f305-6472-4baa-b2ca-47db6636483d%7C237d9870-b5e2-4273-9cc8-ec9c5073117c\" page",
       "match" : {
-        "location" : "MyStepdefs.iGoToXPage()"
+        "arguments" : [ {
+          "val" : "https://www.gloo.us/demo?hsCtaTracking=0c18f305-6472-4baa-b2ca-47db6636483d%7C237d9870-b5e2-4273-9cc8-ec9c5073117c",
+          "offset" : 9
+        } ],
+        "location" : "MyStepdefs.iGoToPage(String)"
       },
       "keyword" : "When "
     }, {
       "result" : {
-        "duration" : 106361919,
+        "duration" : 8947390645,
         "status" : "passed"
       },
-      "line" : 5,
-      "name" : "I see that element",
+      "line" : 6,
+      "name" : "I go to \"https://www.gloo.us/\" page",
       "match" : {
-        "location" : "MyStepdefs.i_see_that_element()"
+        "arguments" : [ {
+          "val" : "https://www.gloo.us/",
+          "offset" : 9
+        } ],
+        "location" : "MyStepdefs.iGoToPage(String)"
       },
-      "keyword" : "Then "
+      "keyword" : "When "
+    }, {
+      "result" : {
+        "duration" : 10134957620,
+        "status" : "passed"
+      },
+      "line" : 7,
+      "name" : "I go to \"https://gorillalogic.com/\" page",
+      "match" : {
+        "arguments" : [ {
+          "val" : "https://gorillalogic.com/",
+          "offset" : 9
+        } ],
+        "location" : "MyStepdefs.iGoToPage(String)"
+      },
+      "keyword" : "When "
     } ]
   } ],
-  "name" : "Test1",
+  "name" : "Open gloo demo page",
   "description" : "",
-  "id" : "test1",
+  "id" : "open-gloo-demo-page",
   "keyword" : "Feature",
-  "uri" : "src/test/resources/features/test.feature",
+  "uri" : "src/test/resources/features/web/test.feature",
   "tags" : [ {
     "line" : 1,
     "name" : "@regression"
@@ -60,9 +91,101 @@
 } , {
   "line" : 2,
   "elements" : [ {
+    "line" : 3,
+    "name" : "User is Logged In Android",
+    "description" : "",
+    "type" : "background",
+    "keyword" : "Background",
+    "steps" : [ {
+      "result" : {
+        "duration" : 13155003489,
+        "status" : "passed"
+      },
+      "line" : 4,
+      "name" : "Open Android platform",
+      "match" : {
+        "location" : "mobileSteps.openAndroidPlatform()"
+      },
+      "keyword" : "Given "
+    }, {
+      "result" : {
+        "duration" : 3661870993,
+        "status" : "passed"
+      },
+      "line" : 5,
+      "name" : "I click the \"alreadyHaveAccountButton~Login\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "alreadyHaveAccountButton~Login",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 6040307435,
+        "status" : "passed"
+      },
+      "line" : 6,
+      "name" : "I enter \"glooaccount2017\" in the \"loginUserNameTextBox~Login\" field",
+      "match" : {
+        "arguments" : [ {
+          "val" : "glooaccount2017",
+          "offset" : 9
+        }, {
+          "val" : "loginUserNameTextBox~Login",
+          "offset" : 34
+        } ],
+        "location" : "mobileSteps.iEnterInTheField(String,String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 5460936300,
+        "status" : "passed"
+      },
+      "line" : 7,
+      "name" : "I enter \"gorilla\" in the \"loginPassWordTextBox~Login\" field",
+      "match" : {
+        "arguments" : [ {
+          "val" : "gorilla",
+          "offset" : 9
+        }, {
+          "val" : "loginPassWordTextBox~Login",
+          "offset" : 26
+        } ],
+        "location" : "mobileSteps.iEnterInTheField(String,String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 700703893,
+        "status" : "passed"
+      },
+      "line" : 8,
+      "name" : "I click the \"loginButton~Login\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "loginButton~Login",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
+      },
+      "keyword" : "And "
+    } ]
+  }, {
     "before" : [ {
       "result" : {
-        "duration" : 225745,
+        "duration" : 786594705,
+        "status" : "passed"
+      },
+      "match" : {
+        "location" : "mobileSteps.setUp(Scenario)"
+      }
+    }, {
+      "result" : {
+        "duration" : 542135622,
         "status" : "passed"
       },
       "match" : {
@@ -70,48 +193,167 @@
       }
     }, {
       "result" : {
-        "duration" : 85964,
+        "duration" : 60751,
         "status" : "passed"
       },
       "match" : {
         "location" : "MyStepdefs3.setUp(Scenario)"
       }
     } ],
-    "line" : 3,
-    "name" : "testing parallel",
+    "line" : 12,
+    "name" : ":Create a new space",
     "description" : "",
-    "id" : "test2;testing-parallel",
+    "id" : "space;:create-a-new-space",
     "type" : "scenario",
     "keyword" : "Scenario",
     "steps" : [ {
       "result" : {
-        "duration" : 12200319212,
+        "duration" : 3498682208,
         "status" : "passed"
       },
-      "line" : 4,
-      "name" : "I go to home page",
+      "line" : 13,
+      "name" : "I click the \"createSpace\" element",
       "match" : {
-        "location" : "MyStepdefs3.iGoToXPage()"
+        "arguments" : [ {
+          "val" : "createSpace",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
       },
-      "keyword" : "When "
+      "keyword" : "And "
     }, {
       "result" : {
-        "duration" : 312082167,
+        "duration" : 813486445,
         "status" : "passed"
       },
-      "line" : 5,
-      "name" : "I check the title of the page",
+      "line" : 14,
+      "name" : "I click the \"createSpace\" element",
       "match" : {
-        "location" : "MyStepdefs3.i_see_that_element()"
+        "arguments" : [ {
+          "val" : "createSpace",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
       },
-      "keyword" : "Then "
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 681377610,
+        "status" : "passed"
+      },
+      "comments" : [ {
+        "line" : 15,
+        "value" : "#And I \"will\" see the \"messages\" element"
+      } ],
+      "line" : 16,
+      "name" : "I \"will\" see the \"actionCreateSpace\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "will",
+          "offset" : 3
+        }, {
+          "val" : "actionCreateSpace",
+          "offset" : 18
+        } ],
+        "location" : "mobileSteps.iSeeTheElement(String,String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 834312653,
+        "status" : "passed"
+      },
+      "line" : 17,
+      "name" : "I click the \"actionCreateSpace\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "actionCreateSpace",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 911907075,
+        "status" : "passed"
+      },
+      "line" : 18,
+      "name" : "I click the \"actionCreateSpace\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "actionCreateSpace",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 947517892,
+        "status" : "passed"
+      },
+      "line" : 19,
+      "name" : "I click the \"newSpaceOption\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "newSpaceOption",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 5444124326,
+        "status" : "passed"
+      },
+      "line" : 20,
+      "name" : "I enter \"gorillaSpace\" in the \"newSpaceName\" field",
+      "match" : {
+        "arguments" : [ {
+          "val" : "gorillaSpace",
+          "offset" : 9
+        }, {
+          "val" : "newSpaceName",
+          "offset" : 31
+        } ],
+        "location" : "mobileSteps.iEnterInTheField(String,String)"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 1562226100,
+        "status" : "passed"
+      },
+      "line" : 21,
+      "name" : "I close the keyboard",
+      "match" : {
+        "location" : "mobileSteps.iCloseTheKeyboard()"
+      },
+      "keyword" : "And "
+    }, {
+      "result" : {
+        "duration" : 266056528,
+        "status" : "passed"
+      },
+      "line" : 22,
+      "name" : "I click the \"createButton\" element",
+      "match" : {
+        "arguments" : [ {
+          "val" : "createButton",
+          "offset" : 13
+        } ],
+        "location" : "mobileSteps.iClickTheElement(String)"
+      },
+      "keyword" : "And "
     } ]
   } ],
-  "name" : "test2",
+  "name" : "space",
   "description" : "",
-  "id" : "test2",
+  "id" : "space",
   "keyword" : "Feature",
-  "uri" : "src/test/resources/features/test2.feature",
+  "uri" : "src/test/resources/features/mobile/Space.feature",
   "tags" : [ {
     "line" : 1,
     "name" : "@regression"

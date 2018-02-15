@@ -7,8 +7,6 @@ import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import sun.reflect.generics.tree.VoidDescriptor;
-
 import java.util.List;
 
 public  class Element implements WebElement, WrapsDriver, WrapsElement {
@@ -36,9 +34,10 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
     @Override
     public void click() {
 
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement element = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(by));
+                ExpectedConditions.elementToBeClickable(by));
+
         element.click();
     }
 
@@ -51,9 +50,10 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement element = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(by));
+
         element.sendKeys(keysToSend);
     }
 
@@ -102,6 +102,7 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement element = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(by));
+
       return element.isDisplayed();
     }
 

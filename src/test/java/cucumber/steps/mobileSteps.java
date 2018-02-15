@@ -20,6 +20,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
+import java.util.concurrent.TimeUnit;
+
 import static framework.config.Selector.generateSelector;
 import static org.assertj.core.api.Assertions.*;
 
@@ -39,18 +41,7 @@ public class mobileSteps  {
 
 
 
-    @When("^I submit username$")
-    public void
-    iSubmitUsername() throws Throwable {
 
-
-    }
-
-    @When("^I submit password$")
-    public void iSubmitPassword() throws Throwable {
-
-
-    }
 
 
 
@@ -69,7 +60,7 @@ public class mobileSteps  {
 
     @And("^I click the \"([^\"]*)\" element$")
     public void iClickTheElement(String element) throws Throwable {
-
+       this.driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
        new Selector().getElement(driver,checkLoginSelector(element),element).click();
     }
 
@@ -104,5 +95,13 @@ public class mobileSteps  {
             return this.featureName;
         }
     }
+
+    @And("^I close the keyboard$")
+    public void iCloseTheKeyboard() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        this.driver.navigate().back();
+    }
+
+
 }
 

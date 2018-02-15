@@ -28,18 +28,20 @@ public class MyStepdefs {
     }
 
 
-    @When("^I go to X page$")
-    public void iGoToXPage() throws Throwable {
-        driver = DriverWeb.getWebDriver("test");
-        driver.get("https://www.google.com/");
-        Thread.sleep(2000);
-    }
+
 
     @Then("^I see that element$")
     public void i_see_that_element() throws Throwable {
         Assert.assertEquals("Google", driver.getTitle());
         driver.quit();
         DriverWeb.setResults(myScenario);
+    }
+
+    @When("^I go to \"([^\"]*)\" page$")
+    public void iGoToPage(String url) throws Throwable {
+        driver = DriverWeb.getWebDriver("test");
+        driver.get(url);
+        Thread.sleep(2000);
     }
 
 
