@@ -1,6 +1,6 @@
 @regression
 Feature: space
-  Background:User is Logged In Android
+  Background:Login
     Given Open Android platform
     And I click the "alreadyHaveAccountButton~Login" element
     And I enter "glooaccount2017" in the "loginUserNameTextBox~Login" field
@@ -9,7 +9,7 @@ Feature: space
 
 
 
-  Scenario: :Create a new space
+  Scenario:New
     And I click the "createSpace" element
     And I click the "createSpace" element
     #And I "will" see the "messages" element

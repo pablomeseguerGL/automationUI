@@ -51,10 +51,7 @@ public class mobileSteps  {
 
     }
 
-    @Given("^Open iOS platform$")
-    public void openIOSPlatform() throws Throwable {
 
-    }
 
 
 
@@ -103,5 +100,10 @@ public class mobileSteps  {
     }
 
 
+    @Given("^OpenB iOS platform$")
+    public void openbIOSPlatform() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        this.driver=driverMobile.getDriver("iOS");
+    }
 }
 

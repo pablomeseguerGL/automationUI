@@ -1,5 +1,6 @@
 package framework.config;
 
+import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.*;
 import org.openqa.selenium.internal.WrapsDriver;
@@ -33,6 +34,7 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public void click() {
+        MobileElement m=null;
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement element = wait.until(
@@ -55,6 +57,7 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
                 ExpectedConditions.visibilityOfElementLocated(by));
 
         element.sendKeys(keysToSend);
+
     }
 
     @Override
