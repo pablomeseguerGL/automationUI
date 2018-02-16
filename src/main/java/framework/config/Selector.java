@@ -12,7 +12,7 @@ public class Selector {
 
         String[] selectorAndInstance = selector.split(":");
         String selectorType =getTypeSelector(platform ,selectorTypeValue);
-
+      //  selectorType = selectorType.equals("@resource-id") ? appPackage + ":id/" + selectorType : selectorType;
         String trimmedSelector = selectorType.equals("@resource-id") ? appPackage + ":id/" + selector : selector;
         String selectorPath = selectorType.equals("native-ios") ? "(//"+trimmedSelector+")" :
                 "(//*[contains(concat(' ', normalize-space(" + selectorType + "), ' '), ' " + trimmedSelector + " ')])";
@@ -43,7 +43,7 @@ public class Selector {
                     case "native-ios":
 
                 }
-            case "iOS":
+            case "iOS":case "web":
                 switch (selectorType.toLowerCase()) {
                     case "id":
                         selectorType = "@id";
@@ -58,6 +58,7 @@ public class Selector {
                         selectorType = "native-ios";
                         break;
                 }
+
 
 
         }

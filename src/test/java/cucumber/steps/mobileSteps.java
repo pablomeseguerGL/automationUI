@@ -8,6 +8,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import framework.common.Utilities;
 import framework.config.DriverMobile;
+import framework.config.DriverWeb;
 import framework.config.Element;
 import framework.config.Selector;
 import gherkin.ast.Background;
@@ -29,6 +30,7 @@ public class mobileSteps  {
 
 
     DriverMobile driverMobile=new DriverMobile();
+    DriverWeb driverWeb=new DriverWeb();
     WebDriver driver=null;
     String featureName;
     @Before
@@ -57,7 +59,7 @@ public class mobileSteps  {
 
     @And("^I click the \"([^\"]*)\" element$")
     public void iClickTheElement(String element) throws Throwable {
-       this.driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
+
        new Selector().getElement(driver,checkLoginSelector(element),element).click();
     }
 
@@ -100,10 +102,21 @@ public class mobileSteps  {
     }
 
 
-    @Given("^OpenB iOS platform$")
-    public void openbIOSPlatform() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+    @Given("^Open iOS platform$")
+    public void openIOSPlatform() throws Throwable {
         this.driver=driverMobile.getDriver("iOS");
+    }
+
+    @Given("^Open Web platform$")
+    public void openWebPlatform() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        this.driver=driverWeb.getWebDriver("test");
+    }
+
+    @When("^I go to \"([^\"]*)\" page$")
+    public void iGoToPage(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.navigate().to(arg0);
     }
 }
 

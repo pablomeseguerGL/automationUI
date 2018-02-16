@@ -1,7 +1,8 @@
 @regression
 Feature: space
   Scenario: :Login pe
-   * Given OpenB iOS platform
+    Given Open iOS platform
+
 
 
 

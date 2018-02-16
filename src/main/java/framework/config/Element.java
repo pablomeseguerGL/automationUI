@@ -34,7 +34,6 @@ public  class Element implements WebElement, WrapsDriver, WrapsElement {
 
     @Override
     public void click() {
-        MobileElement m=null;
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement element = wait.until(

@@ -169,7 +169,7 @@ public class DriverMobile  {
 
         }
 
-        return (AndroidDriver) driver;
+        return  driver;
 
     }
 

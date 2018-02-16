@@ -36,7 +36,7 @@ public class DriverWeb {
     public static String sessionId;
 
 
-    public static WebDriver getWebDriver(String testNameP) throws Exception {
+    public  WebDriver getWebDriver(String testNameP) throws Exception {
         util = new Utilities();
         testName = testNameP;
         readConfiguration();
